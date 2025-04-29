@@ -6,7 +6,7 @@
     <title>CRIMIN</title>
 
     <style>
-    .status {
+    .statut {
       margin-left: 10px;
       font-weight: bold;
     }
@@ -23,12 +23,7 @@
     <h2>CRIMIN</h2>
 
 <button id="sendDataButton">CAPTURER LES EMPREINTES</button>
-  <span id="statusFP" class="status"></span>
-  <br><br>
-
-  <button id="sendDataButtonPhoto">CAPTURER LES PHOTOS</button>
-  <span id="statusPhoto" class="status"></span>
-
+<span id="statusFP" class="status"></span>
 
     <div id="returnDataDisplay"></div>
 
@@ -127,18 +122,11 @@ function updateStatusFromUrl() {
       const params = new URLSearchParams(window.location.search);
 
       const messageFP = params.get("messageFP");
-      const messagePhoto = params.get("messagePhoto");
 
       if (messageFP) {
         const spanFP = document.getElementById("statusFP");
         spanFP.textContent = messageFP;
-        spanFP.className = "statut " + (messageFP.toUpperCase() === "termine" ? "termine" : "en attente");
-      }
-
-      if (messagePhoto) {
-        const spanPhoto = document.getElementById("statusPhoto");
-        spanPhoto.textContent = messagePhoto;
-        spanPhoto.className = "statut " + (messagePhoto.toUpperCase() === "termine" ? "termine" : "en attente");
+        spanFP.className = "statut " + (messageFP.toUpperCase() === "OK" ? "ok" : "nok");
       }
     }
 
