@@ -132,13 +132,13 @@ function updateStatusFromUrl() {
       if (messageFP) {
         const spanFP = document.getElementById("statusFP");
         spanFP.textContent = messageFP;
-        spanFP.className = "status " + (messageFP.toUpperCase() === "OK" ? "ok" : "nok");
+        spanFP.className = "statut " + (messageFP.toUpperCase() === "termine" ? "termine" : "en attente");
       }
 
       if (messagePhoto) {
         const spanPhoto = document.getElementById("statusPhoto");
         spanPhoto.textContent = messagePhoto;
-        spanPhoto.className = "status " + (messagePhoto.toUpperCase() === "OK" ? "ok" : "nok");
+        spanPhoto.className = "statut " + (messagePhoto.toUpperCase() === "termine" ? "termine" : "en attente");
       }
     }
 
