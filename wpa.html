@@ -126,7 +126,7 @@ function updateStatusFromUrl() {
       if (messageFP) {
         const spanFP = document.getElementById("statusFP");
         spanFP.textContent = messageFP;
-        spanFP.className = "statut " + (messageFP.toUpperCase() === "OK" ? "ok" : "nok");
+        spanFP.className = "statut " + (messageFP.toUpperCase() === "TERMINÉ" ? "ok" : "nok");
       }
     }
 
