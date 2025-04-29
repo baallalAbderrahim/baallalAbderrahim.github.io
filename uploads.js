@@ -1,33 +1,20 @@
 const express = require('express');
-const multer = require('multer');
-const fs = require('fs');
-
 const app = express();
 const port = 3000;
 
-// Configure multer to handle file uploads
-const upload = multer({ dest: 'uploads/' });
+// Middleware to parse JSON
+app.use(express.json());
 
-app.post('/upload', upload.single('file'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ message: 'No file uploaded' });
+app.post('/upload', (req, res) => {
+    const jsonData = req.body;
+
+    if (!jsonData) {
+        return res.status(400).json({ message: 'No JSON data received' });
     }
 
-    // Read file content
-    fs.readFile(req.file.path, 'utf-8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ message: 'Error reading file' });
-        }
-
-        try {
-            const jsonData = JSON.parse(data);
-            res.json({ message: 'Upload successful', data: jsonData });
-        } catch (error) {
-            res.status(400).json({ message: 'Invalid JSON format' });
-        }
-    });
+    res.json({ message: 'JSON received successfully', data: jsonData });
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server running at http://localhost:${port}`);
 });
