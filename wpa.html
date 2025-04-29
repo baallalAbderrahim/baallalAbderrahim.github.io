@@ -4,13 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRIMIN</title>
+
+    <style>
+    .status {
+      margin-left: 10px;
+      font-weight: bold;
+    }
+    .ok {
+      color: green;
+    }
+    .nok {
+      color: red;
+    }
+  </style>
+    
 </head>
 <body>
     <h2>CRIMIN</h2>
 
- <button id="sendDataButton">CAPTURER LES EMPREINTES --> </button>
-<br><br>
-<button id="sendDataButtonPhoto">CAPTURER LES PHOTOS --> </button>
+<button id="sendDataButton">CAPTURER LES EMPREINTES</button>
+  <span id="statusFP" class="status"></span>
+  <br><br>
+
+  <button id="sendDataButtonPhoto">CAPTURER LES PHOTOS</button>
+  <span id="statusPhoto" class="status"></span>
 
 
     <div id="returnDataDisplay"></div>
@@ -105,23 +122,28 @@
             window.location.href = intentUrl;
         });
 
-        function handleReturnIntent() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const returnData = urlParams.get('data');
 
-            if (returnData) {
-                returnDataDisplay.textContent = "Received from Android: " + returnData;
-                window.history.replaceState({}, document.title, "/"); // Clear URL params
-            }
-        }
+function updateStatusFromUrl() {
+      const params = new URLSearchParams(window.location.search);
 
-        handleReturnIntent();
+      const messageFP = params.get("messageFP");
+      const messagePhoto = params.get("messagePhoto");
 
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'visible') {
-                handleReturnIntent();
-            }
-        });
+      if (messageFP) {
+        const spanFP = document.getElementById("statusFP");
+        spanFP.textContent = messageFP;
+        spanFP.className = "status " + (messageFP.toUpperCase() === "OK" ? "ok" : "nok");
+      }
+
+      if (messagePhoto) {
+        const spanPhoto = document.getElementById("statusPhoto");
+        spanPhoto.textContent = messagePhoto;
+        spanPhoto.className = "status " + (messagePhoto.toUpperCase() === "OK" ? "ok" : "nok");
+      }
+    }
+
+    // Call on load
+    window.onload = updateStatusFromUrl;
     </script>
 </body>
 </html>
